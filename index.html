@@ -5,12 +5,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather | C1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css">
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body>
-    <div id="root"></div>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <span class="icon has-text-info">
+                    <img class="has-text-white" src="./src/smog-solid.svg" alt="location">
+                </span>
+                <h1>Weather</h1>
+            </a>
+        </div>
+    </nav>
+    <input id="search" class="mt-10 input is-rounded" type="search" placeholder="Search your Living place">
+    <div class="breadcrumb" aria-label="breadcrumbs">
+        <ul class="center">
+            <li><a href="#">Hourly</a></li>
+            <li><a href="#">Daily</a></li>
+        </ul>
+    </div>
+
+
+    </input>
+
+    <div id="main"></div>
 
     <script src="index.js" type="module"></script>
 </body>
 
 </html>
+
+<template id="hourlyForecast">
+    <div class="card">
+        <!-- <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+            </figure>
+        </div> -->
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-128x128">
+                        <img id="weatherIcon" src="https://bulma.io/images/placeholders/96x96.png"
+                            alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">Ottawa</p>
+                    <p class="subtitle is-6">Clouds <span class="subtitle is-3">23°C</span></p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="columns">
+                    <div class="column">
+                        <p class="bd-notification is-info">First column</p>
+                        <div class="columns is-mobile">
+                            <div class="column">
+                                <p class="bd-notification is-info">
+                                <ul type="A">
+                                    <h4>Wind</h4>
+                                    <li>deg: 200</li>
+                                    <li>gust: 8.2</li>
+                                    <li>speed: 3.6</li>
+                                </ul>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <p class="bd-notification is-info">
+                                <ul type="a">
+                                    <h4>Temp</h4>
+                                    <li>feel like: 23.91</li>
+                                    <li>Tea</li>
+                                    <li>Milk</li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    <br>
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                </div>
+                <div class="content">
+
+
+
+                    <ol type="I">
+                        <li>Coffee</li>
+                        <li>Tea</li>
+                        <li>Milk</li>
+                    </ol>
+                    <ol type="i">
+                        <li>Coffee</li>
+                        <li>Tea</li>
+                        <li>Milk</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+</template>
+<template id="dailyForecast">
+
+</template>

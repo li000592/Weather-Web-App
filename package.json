@@ -1,0 +1,22 @@
+{
+  "name": "assignment1",
+  "version": "1.0.0",
+  "description": "HTML5 WEATHER APP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/li000592/mad9135-c1-html5-weather.git"
+  },
+  "author": "HaoRong Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/li000592/mad9135-c1-html5-weather/issues"
+  },
+  "homepage": "https://github.com/li000592/mad9135-c1-html5-weather#readme",
+  "dependencies": {
+    "bulma": "^0.9.1"
+  }
+}
