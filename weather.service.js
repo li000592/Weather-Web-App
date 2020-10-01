@@ -64,7 +64,8 @@ export function createWeatherIcon(iconCode) {
     let img = document.createElement('img')
     img.setAttribute(
         'src',
-        'https://openweathermap.org/img/w/' + iconCode + '.png'
+        // 'https://openweathermap.org/img/w/' + iconCode + '.png'
+        'https://openweathermap.org/img/wn/' + iconCode + '@4x.png'
     )
     img.setAttribute('alt', '')
     return img

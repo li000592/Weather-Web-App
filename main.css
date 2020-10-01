@@ -2,3 +2,9 @@
     display: flex;
     justify-content: center;
 }
+.container {
+    width: 95%;
+}
+#currentDate {
+    border-bottom: 0.5px rgb(223, 218, 218) solid;
+}
