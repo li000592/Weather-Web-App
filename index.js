@@ -55,7 +55,21 @@ const App = {
     },
     clickLocation: async () => {
         console.log('LOCATION');
-        await App.getCurrentLocation()
+
+        App.currentRender()
+        try {
+            await App.getCurrentLocation()
+            const coord = { lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat }
+            const forecast = await getForecast({ coord })
+            App.currentCoordinate.lat = coord.lat
+            App.currentCoordinate.lon = coord.lon
+            await App.getCity()
+            console.log(forecast)
+            localStorage.setItem('weather-data', JSON.stringify(forecast))
+            console.log(JSON.parse(localStorage.getItem('weather-data')))
+        } catch (error) {
+            console.log(error.message)
+        }
         App.currentRender()
 
     },
@@ -100,6 +114,9 @@ const App = {
         // teamp
         let currentTemp = document.getElementById('currentTemp')
         currentTemp.textContent = parseInt(data.current.temp) + '°C'
+        // feel like temp
+        let feelLike = document.getElementById('feelLike')
+        feelLike.textContent = parseInt(data.current.feels_like) + '°C'
 
         // App.getCity()
 
