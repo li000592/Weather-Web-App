@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="#">
@@ -22,8 +21,8 @@
             </a>
         </div>
     </nav>
-
     </input>
+    <progress id="progressBar" class="hidden progress is-small is-primary" max="100">15%</progress>
     <main>
         <div class="container">
             <input id="search" class="mt-4 input is-rounded" type="search" placeholder="City Searcher">
@@ -44,9 +43,8 @@
         </div>
         <div id="main"></div>
         <div id="hourlyOrDaily" class="card"></div>
-        <progress id="progressBar" class="hidden progress is-small is-primary" max="100">15%</progress>
-    </main>
 
+    </main>
     <script src="index.js" type="module"></script>
 </body>
 
@@ -78,7 +76,6 @@
                             <div class="column">
                                 <p class="bd-notification is-info">
                                 <ul type="A">
-                                    <!-- <h4>Wind</h4> -->
                                     <li>Sunrise: <span id="sunrise">7:03AM</span></li>
                                     <li>Presure: <span id="pressure">1014hPa</span></li>
                                     <li>visibility: <span id="visibility">16.1 km</span></li>
@@ -88,7 +85,6 @@
                             <div class="column">
                                 <p class="bd-notification is-info">
                                 <ul type="a">
-                                    <!-- <h4>Temp</h4> -->
                                     <li>Sunset: <span id="sunset">9:42PM</span> </li>
                                     <li>Humidity: <span id="humidity">64%</span></li>
                                     <li>UV INDEX: <span id="uxIndex">0</span></li>
@@ -97,14 +93,13 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 </template>
 
 <template id="hourlyForecast">
-    <h1 class="subtitle ml-2 is-uppercase">Hourly</h1>
+    <h1 class="subtitle ml-2 is-uppercase  pt-3 is-family-monospace">/Hourly</h1>
     <div id="hourlyColumns" class="columns is-mobile">
         <!-- <div class="column">
             <div class="time">6p</div>
@@ -115,7 +110,7 @@
 </template>
 
 <template id="dailyForecast">
-    <h1 class="subtitle ml-2 is-uppercase">Daily</h1>
+    <h1 class="subtitle ml-2 is-uppercase  pt-3 is-family-monospace">/Daily</h1>
     <div id="dailyColumns" class="columns is-mobile ">
         <!-- <div class="column">
             <div class="time">11p</div>

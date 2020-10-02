@@ -2,13 +2,11 @@ import { getForecast, createWeatherIcon } from './weather.service.js'
 import { getGeolocation } from './map.service.js'
 
 const App = {
-    currentCity: 'Toronto',
     searchInput: 'Toronto',
     currentCoordinate: {
         lat: '45.42',
         lon: '-75.69'
     },
-    data: {},
     init: async () => {
         let progressBar = document.getElementById('progressBar')
         progressBar.classList.remove('hidden')
@@ -17,15 +15,15 @@ const App = {
         let template = document.getElementById('currentForecast')
         let form = template.content.cloneNode(true)
         main.appendChild(form)
-        App.EventListener()
 
+        App.EventListener()
         if (!localStorage.getItem('weather-data')) await App.getGeolocation()
         if (!localStorage.getItem('currentCity')) await App.getCity()
+
         App.currentRender()
         await App.hourlyRender()
-        progressBar.classList.add('hidden')
-        console.log('DONE');
 
+        progressBar.classList.add('hidden')
     },
     EventListener: () => {
         // search click & enter/return
@@ -43,23 +41,25 @@ const App = {
         // get location
         document.getElementById('location-btn').addEventListener('click', App.clickLocation)
     },
-    clickSearch: async () => {
+    clickSearch: async ev => {
+        if (ev) ev.preventDefault()
         let searchValue = document.getElementById('search').value
         console.log('SEARCH VALUE:', searchValue)
         App.searchInput = searchValue
         await App.getGeolocation()
         App.currentRender()
 
-        // App.currentRender()
         if (document.getElementById('hourlyForecast')) App.hourlyRender()
         else App.dailyRender()
         searchValue = ''
     },
-    clickLocation: async () => {
+    clickLocation: async ev => {
+        if (ev) ev.preventDefault()
         try {
             await App.getCurrentLocation()
-            const forecast = await getForecast({ lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat })
             await App.getCity()
+            const forecast = await getForecast({ lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat })
+
             localStorage.setItem('weather-data', JSON.stringify(forecast))
             console.log(JSON.parse(localStorage.getItem('weather-data')))
         } catch (error) {
@@ -69,10 +69,6 @@ const App = {
         if (document.getElementById('hourlyForecast')) App.hourlyRender()
         else App.dailyRender()
 
-    },
-    progressRender: () => {
-        let progressBar = document.getElementById('progressBar')
-        progressBar.classList.add('hidden')
     },
     currentRender: () => {
         let weatherIcon = document.getElementById('weatherIcon')
@@ -128,7 +124,9 @@ const App = {
         let visibility = document.getElementById('visibility')
         visibility.textContent = data.current.visibility / 1000 + 'km'
     },
-    hourlyRender: () => {
+    hourlyRender: ev => {
+        if (ev) ev.preventDefault()
+
         let hourlyOrDaily = document.getElementById('hourlyOrDaily')
         hourlyOrDaily.innerHTML = ''
         let template = document.getElementById('hourlyForecast')
@@ -161,7 +159,8 @@ const App = {
             div.appendChild(icon)
         }
     },
-    dailyRender: (forecast) => {
+    dailyRender: ev => {
+        if (ev) ev.preventDefault()
         let hourlyOrDaily = document.getElementById('hourlyOrDaily')
         hourlyOrDaily.innerHTML = ''
 
@@ -217,23 +216,29 @@ const App = {
 
             await App.getCity()
             localStorage.setItem('weather-data', JSON.stringify(forecast))
-            console.log("CURRENT DATA:", JSON.parse(localStorage.getItem('weather-data')));
+            console.log("CURRENT DATA:", JSON.parse(localStorage.getItem('weather-data')))
             progressBar.classList.add('hidden')
         } catch (error) {
             console.log(error.message)
             let search = document.getElementById('search')
             search.value = ''
-            search.placeholder = 'Illegal Keywords, please try again!'
+
+            setTimeout(() => {
+                document.getElementById('progressBar').classList.add('hidden')
+                search.placeholder = 'Illegal Keywords, please try again!'
+            }, 1000)
+
         }
     },
     getCity: async () => {
         let progressBar = document.getElementById('progressBar')
         progressBar.classList.remove('hidden')
+
         let link = await `https://maps.googleapis.com/maps/api/geocode/json?latlng=${App.currentCoordinate.lat},${App.currentCoordinate.lon}&key=AIzaSyBGj0jkgUzBeGRw15c_M9v_t68eEqzBFmE`
         const response = await fetch(link)
         const myJson = await response.json()
-        console.log('CITY DATA', myJson);
-        console.log("CURRENTCITY: ", myJson.results[0].address_components[3].long_name);
+        console.log('CITY DATA', myJson)
+        console.log("CURRENTCITY: ", myJson.results[0].address_components[3].long_name)
         await localStorage.setItem('currentCity', myJson.results[0].address_components[3].long_name)
         progressBar.classList.add('hidden')
     },
@@ -242,25 +247,25 @@ const App = {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0
-        };
+        }
 
         function success(pos) {
-            var crd = pos.coords;
+            var crd = pos.coords
 
-            console.log('Your current position is:');
-            console.log(`Latitude : ${crd.latitude}`);
-            console.log(`Longitude: ${crd.longitude}`);
-            console.log(`More or less ${crd.accuracy} meters.`);
+            console.log('Your current position is:')
+            console.log(`Latitude : ${crd.latitude}`)
+            console.log(`Longitude: ${crd.longitude}`)
+            console.log(`More or less ${crd.accuracy} meters.`)
             App.currentCoordinate.lat = crd.latitude
             App.currentCoordinate.lon = crd.longitude
-            console.log("GETCURRENT:", App.currentCoordinate);
+            console.log("GETCURRENT:", App.currentCoordinate)
         }
 
         function error(err) {
-            console.warn(`ERROR(${err.code}): ${err.message}`);
+            console.warn(`ERROR(${err.code}): ${err.message}`)
         }
 
-        await navigator.geolocation.getCurrentPosition(success, error, options);
+        await navigator.geolocation.getCurrentPosition(success, error, options)
     },
 }
 
