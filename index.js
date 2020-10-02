@@ -10,6 +10,8 @@ const App = {
     },
     data: {},
     init: async () => {
+        let progressBar = document.getElementById('progressBar')
+        progressBar.classList.remove('hidden')
 
         let main = document.getElementById('main')
         let template = document.getElementById('currentForecast')
@@ -20,7 +22,9 @@ const App = {
         if (!localStorage.getItem('weather-data')) await App.getGeolocation()
         if (!localStorage.getItem('currentCity')) await App.getCity()
         App.currentRender()
-        App.hourlyRender()
+        await App.hourlyRender()
+        progressBar.classList.add('hidden')
+        console.log('DONE');
 
     },
     EventListener: () => {
@@ -65,6 +69,10 @@ const App = {
         if (document.getElementById('hourlyForecast')) App.hourlyRender()
         else App.dailyRender()
 
+    },
+    progressRender: () => {
+        let progressBar = document.getElementById('progressBar')
+        progressBar.classList.add('hidden')
     },
     currentRender: () => {
         let weatherIcon = document.getElementById('weatherIcon')
@@ -195,6 +203,8 @@ const App = {
 
     },
     getGeolocation: async () => {
+        let progressBar = document.getElementById('progressBar')
+        progressBar.classList.remove('hidden')
         try {
             const coord = await getGeolocation(App.searchInput)
             const forecast = await getForecast({ coord })
@@ -207,6 +217,8 @@ const App = {
 
             await App.getCity()
             localStorage.setItem('weather-data', JSON.stringify(forecast))
+            console.log("CURRENT DATA:", JSON.parse(localStorage.getItem('weather-data')));
+            progressBar.classList.add('hidden')
         } catch (error) {
             console.log(error.message)
             let search = document.getElementById('search')
@@ -215,13 +227,17 @@ const App = {
         }
     },
     getCity: async () => {
-        let link = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${App.currentCoordinate.lat},${App.currentCoordinate.lon}&key=AIzaSyBGj0jkgUzBeGRw15c_M9v_t68eEqzBFmE`
+        let progressBar = document.getElementById('progressBar')
+        progressBar.classList.remove('hidden')
+        let link = await `https://maps.googleapis.com/maps/api/geocode/json?latlng=${App.currentCoordinate.lat},${App.currentCoordinate.lon}&key=AIzaSyBGj0jkgUzBeGRw15c_M9v_t68eEqzBFmE`
         const response = await fetch(link)
         const myJson = await response.json()
+        console.log('CITY DATA', myJson);
         console.log("CURRENTCITY: ", myJson.results[0].address_components[3].long_name);
-        localStorage.setItem('currentCity', myJson.results[0].address_components[3].long_name)
+        await localStorage.setItem('currentCity', myJson.results[0].address_components[3].long_name)
+        progressBar.classList.add('hidden')
     },
-    getCurrentLocation: () => {
+    getCurrentLocation: async () => {
         var options = {
             enableHighAccuracy: true,
             timeout: 5000,
@@ -244,7 +260,7 @@ const App = {
             console.warn(`ERROR(${err.code}): ${err.message}`);
         }
 
-        navigator.geolocation.getCurrentPosition(success, error, options);
+        await navigator.geolocation.getCurrentPosition(success, error, options);
     },
 }
 
