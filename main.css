@@ -27,4 +27,13 @@
 .buttons {
     display: flex;
     flex-direction: row-reverse;
+
+    
+}
+body {
+    height: 100vh;
+    min-height: 100vh;
+}
+#hourlyOrDaily {
+    height: 300px;
 }
