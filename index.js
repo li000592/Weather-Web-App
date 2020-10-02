@@ -57,9 +57,11 @@ const App = {
         if (ev) ev.preventDefault()
         try {
             await App.getCurrentLocation()
-            await App.getCity()
-            const forecast = await getForecast({ lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat })
 
+            const forecast = await getForecast({ lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat })
+            App.currentCoordinate.lat = forecast.lat
+            App.currentCoordinate.lon = forecast.lon
+            await App.getCity()
             localStorage.setItem('weather-data', JSON.stringify(forecast))
             console.log(JSON.parse(localStorage.getItem('weather-data')))
         } catch (error) {
