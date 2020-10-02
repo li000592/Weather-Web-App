@@ -7,10 +7,11 @@
     <title>Weather | C1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.css">
     <link rel="stylesheet" href="./main.css">
+    <link rel="shortcut icon" type="image/jpg" href="./src/favicon.ico" />
 </head>
 
 <body>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-primary has-navbar-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="#">
                 <span class="icon has-text-info">
@@ -19,33 +20,54 @@
                 <h1 class="ml-3 has-text-weight-bold">Weather</h1>
             </a>
         </div>
-        <div class="navbar-end">
-            <div class="location has-text-weight-bold">Ottawa</div>
-        </div>
 
+        <div class="navbar-menu">
+            <a class="navbar-item" href="#">
+                <span class="icon has-text-info">
+                    <img class="has-text-white" src="./src/location-arrow-solid.svg" alt="location">
+                </span>
+            </a>
+
+        </div>
     </nav>
 
-    <div class="container">
-        <input id="search" class="mt-4 input is-rounded" type="search" placeholder="Search your Living place">
-    </div>
-    <div class="breadcrumb" aria-label="breadcrumbs">
-        <ul class="center">
-            <li><a href="#">Hourly</a></li>
-            <li><a href="#">Daily</a></li>
-        </ul>
-    </div>
 
 
     </input>
 
-    <div id="main"></div>
+    <main>
+        <div class="container">
+            <input id="search" class="mt-4 input is-rounded" type="search" placeholder="Search your Living place">
+        </div>
+        <div>
+        </div>
+        <div class="breadcrumb mt-4 mb-0" aria-label="breadcrumbs">
+            <ul class="time-btn">
+                <li id="hourly-btn"><a href="#">Hourly</a></li>
+                <li id="daily-btn"><a href="#">Daily</a></li>
+            </ul>
+            <div class="buttons">
+                <div id="search-btn" class="button is-primary is-rounded">
+                    <img id="search-icon" class="icons" src="./src/search-solid.svg" alt="">
+                </div>
+                <div id="location-btn" class=" button is-primary is-rounded">
+                    <img class="has-text-white icons" src="./src/location-arrow-solid.svg" alt="location">
+                </div>
+            </div>
+        </div>
+        <div id="main"></div>
+        <div id="hourlyOrDaily" class="card">
+
+        </div>
+    </main>
+
 
     <script src="index.js" type="module"></script>
 </body>
 
 </html>
 
-<template id="hourlyForecast">
+<template id="currentForecast">
     <div class="card">
         <div class="card-content ">
             <div class="media">
@@ -55,11 +77,12 @@
                             alt="Placeholder image"> -->
                     </figure>
                 </div>
-                <div class="media- >
-                    <p id=" currentPlace" class="title is-4">Ottawa</p>
+                <div class="media-">
+                    <p id="currentPlace" class="title is-4">Ottawa</p>
                     <p class="subtitle is-6 has-text-right"><span id="weather"
                             class="pr-3 has-text-left">Clouds</span><span id="currentTemp"
                             class="subtitle is-1">23°C</span></p>
+                    <p class="is-6">Feel like: 9°C</p>
                 </div>
             </div>
             <p id="currentDate" class="bd-notification is-info has-text-right is-size-7 has-text-grey-dark bb-1">
@@ -73,49 +96,120 @@
                             <div class="column">
                                 <p class="bd-notification is-info">
                                 <ul type="A">
-                                    <h4>Wind</h4>
-                                    <li>deg: 200</li>
-                                    <li>gust: 8.2</li>
-                                    <li>speed: 3.6</li>
+                                    <!-- <h4>Wind</h4> -->
+                                    <li class="">Sunrise: <span>7:03AM</span></li>
+                                    <li>Change of Rain: <span>20%</span></li>
+                                    <li>Visability: 16.1 km</li>
                                 </ul>
                                 </p>
                             </div>
                             <div class="column">
                                 <p class="bd-notification is-info">
                                 <ul type="a">
-                                    <h4>Temp</h4>
-                                    <li>feel like: 23.91</li>
-                                    <li>Tea</li>
-                                    <li>Milk</li>
+                                    <!-- <h4>Temp</h4> -->
+                                    <li>Sunset: 9:42PM</li>
+                                    <li>HUMIDITY: 64%</li>
+                                    <li>UV INDEX: 0</li>
                                 </ul>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br>
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                </div>
-                <div class="content">
 
-
-
-                    <ol type="I">
-                        <li>Coffee</li>
-                        <li>Tea</li>
-                        <li>Milk</li>
-                    </ol>
-                    <ol type="i">
-                        <li>Coffee</li>
-                        <li>Tea</li>
-                        <li>Milk</li>
-                    </ol>
                 </div>
             </div>
         </div>
 </template>
-<template id="dailyForecast">
+<template id="hourlyForecast">
+    <h1 class="subtitle ml-2 is-uppercase">Hourly</h1>
+    <div id="hourlyColumns" class="columns is-mobile">
+        <!-- <div class="column">
+            <div class="time">6p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">7p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">8p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">9p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">10p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">11p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div> -->
 
+    </div>
 </template>
+<template id="dailyForecast">
+    <h1 class="subtitle ml-2 is-uppercase">Daily</h1>
+    <div id="dailyColumns" class="columns is-mobile ">
+        <!-- <div class="column">
+            <div class="time">6p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">7p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">8p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">9p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">10p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div>
+        <div class="column">
+            <div class="time">11p</div>
+            <div class="temp">20°C</div>
+            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+        </div> -->
+
+    </div>
+</template>
+
+<!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+<a href="#">#css</a> <a href="#">#responsive</a>
+<br>
+<time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+</div>
+<div class="content">
+
+
+
+<ol type="I">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol>
+<ol type="i">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+</ol> -->
