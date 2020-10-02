@@ -31,15 +31,10 @@
         </div>
     </nav>
 
-
-
     </input>
-
     <main>
         <div class="container">
             <input id="search" class="mt-4 input is-rounded" type="search" placeholder="Search your Living place">
-        </div>
-        <div>
         </div>
         <div class="breadcrumb mt-4 mb-0" aria-label="breadcrumbs">
             <ul class="time-btn">
@@ -56,12 +51,8 @@
             </div>
         </div>
         <div id="main"></div>
-        <div id="hourlyOrDaily" class="card">
-
-        </div>
+        <div id="hourlyOrDaily" class="card"></div>
     </main>
-
-
     <script src="index.js" type="module"></script>
 </body>
 
@@ -86,20 +77,20 @@
                 </div>
             </div>
             <p id="currentDate" class="bd-notification is-info has-text-right is-size-7 has-text-grey-dark bb-1">
-                Wed Sep 30 2020 19:34:40
+                Last Time Update:<span id="dateUpdate"> Wed Sep 30 2020 19:34:40</span>
             </p>
             <div class="content">
                 <div class="columns">
                     <div class="column">
 
-                        <div class="columns is-mobile">
+                        <div class="columns is-mobile container is-size-7">
                             <div class="column">
                                 <p class="bd-notification is-info">
                                 <ul type="A">
                                     <!-- <h4>Wind</h4> -->
-                                    <li class="">Sunrise: <span>7:03AM</span></li>
-                                    <li>Change of Rain: <span>20%</span></li>
-                                    <li>Visability: 16.1 km</li>
+                                    <li>Sunrise: <span id="sunrise">7:03AM</span></li>
+                                    <li>Presure: <span id="pressure">1014hPa</span></li>
+                                    <li>visibility: <span id="visibility">16.1 km</span></li>
                                 </ul>
                                 </p>
                             </div>
@@ -107,9 +98,9 @@
                                 <p class="bd-notification is-info">
                                 <ul type="a">
                                     <!-- <h4>Temp</h4> -->
-                                    <li>Sunset: 9:42PM</li>
-                                    <li>HUMIDITY: 64%</li>
-                                    <li>UV INDEX: 0</li>
+                                    <li>Sunset: <span id="sunset">9:42PM</span> </li>
+                                    <li>Humidity: <span id="humidity">64%</span></li>
+                                    <li>UV INDEX: <span id="uxIndex">0</span></li>
                                 </ul>
                                 </p>
                             </div>
@@ -120,6 +111,7 @@
             </div>
         </div>
 </template>
+
 <template id="hourlyForecast">
     <h1 class="subtitle ml-2 is-uppercase">Hourly</h1>
     <div id="hourlyColumns" class="columns is-mobile">
@@ -130,6 +122,7 @@
         </div> -->
     </div>
 </template>
+
 <template id="dailyForecast">
     <h1 class="subtitle ml-2 is-uppercase">Daily</h1>
     <div id="dailyColumns" class="columns is-mobile ">

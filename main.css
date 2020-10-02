@@ -9,6 +9,7 @@
     width: 95%;
 }
 #currentDate {
+    padding-bottom: 10px;
     border-bottom: 0.5px rgb(223, 218, 218) solid;
 }
 .icons {
