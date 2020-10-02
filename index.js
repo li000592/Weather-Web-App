@@ -1,9 +1,6 @@
 import { getForecast, createWeatherIcon } from './weather.service.js'
 import { getGeolocation } from './map.service.js'
 
-
-const location = 'Algonquin College, Nepean, ON, CA'
-
 const App = {
     currentCity: 'Toronto',
     searchInput: 'Toronto',
@@ -44,21 +41,21 @@ const App = {
     },
     clickSearch: async () => {
         let searchValue = document.getElementById('search').value
-        console.log(searchValue)
+        console.log('SEARCH VALUE:', searchValue)
         App.searchInput = searchValue
         await App.getGeolocation()
         App.currentRender()
-        searchValue = ''
+
         // App.currentRender()
         if (document.getElementById('hourlyForecast')) App.hourlyRender()
         else App.dailyRender()
+        searchValue = ''
     },
     clickLocation: async () => {
         try {
             await App.getCurrentLocation()
             const forecast = await getForecast({ lon: App.currentCoordinate.lon, lat: App.currentCoordinate.lat })
             await App.getCity()
-            console.log(forecast)
             localStorage.setItem('weather-data', JSON.stringify(forecast))
             console.log(JSON.parse(localStorage.getItem('weather-data')))
         } catch (error) {
@@ -212,12 +209,16 @@ const App = {
             localStorage.setItem('weather-data', JSON.stringify(forecast))
         } catch (error) {
             console.log(error.message)
+            let search = document.getElementById('search')
+            search.value = ''
+            search.placeholder = 'Illegal Keywords, please try again!'
         }
     },
     getCity: async () => {
         let link = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${App.currentCoordinate.lat},${App.currentCoordinate.lon}&key=AIzaSyBGj0jkgUzBeGRw15c_M9v_t68eEqzBFmE`
         const response = await fetch(link)
         const myJson = await response.json()
+        console.log("CURRENTCITY: ", myJson.results[0].address_components[3].long_name);
         localStorage.setItem('currentCity', myJson.results[0].address_components[3].long_name)
     },
     getCurrentLocation: () => {
